@@ -28,6 +28,7 @@
               case '/signin':
               case '/signup':
               case '/agents/code-verification':
+              case '/agents/profile':
               case '/forgot-password':
                 return $element.addClass('body-wide');
               case '/lock-screen':
@@ -69,7 +70,27 @@
         }
       };
     }
-  ]).directive('goBack', [
+  ]).directive("repeatPassword", function() {
+    return {
+        require: "ngModel",
+        link: function(scope, ele, attrs, ctrl) {
+            var otherInput = ele.inheritedData("$formController")[attrs.repeatPassword];
+
+            ctrl.$parsers.push(function(value) {
+                if(value === otherInput.$viewValue) {
+                    ctrl.$setValidity("repeat", true);
+                    return value;
+                }
+                ctrl.$setValidity("repeat", false);
+            });
+
+            otherInput.$parsers.push(function(value) {
+                ctrl.$setValidity("repeat", value === ctrl.$viewValue);
+                return value;
+            });
+        }
+    };
+}).directive('goBack', [
     function() {
       return {
         restrict: "A",
