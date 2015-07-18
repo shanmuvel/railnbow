@@ -1,20 +1,31 @@
-<div class="page">
-    <section class="panel panel-default">
+<div class="page-signin">
+
+    <div class="signin-header">
+        <section class="logo text-center">
+            <a href="#/">{{main.brand}}</a>
+        </section>
+    </div>
+
+    <div class="main-body">
+        <div class="container">
+            <div class="form-container" style="max-width:660px;">
+               <section class="panel panel-default">
         <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Profile</strong></div>
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
-
-                    <form role="form">
-                        <div class="form-group">
+                  <div ng-show="cfm.message" ng-class="{'alert alert-success': cfm.success, 'alert alert-danger': !cfm.success}">{{cfm.message}}</div>
+                    <form name="form" ng-submit="cfm.createProfile()" role="form">
+                        <div class="form-group" >
                             <div class="row">
-                                <div class="col-md-6">
-                                   <label for="firstname">First Name</label>
-                                   <input type="text" class="form-control" id="firstname" placeholder="Enter your first name">
+                                <div class="col-md-6" ng-class="{'has-error': form.firstname.$dirty && form.firstname.$error.required }">
+                                   <label for="firstname">First Name*</label>
+                                   <input type="text" class="form-control" id="firstname" name="firstname" placeholder="Enter your first name" ng-model="cfm.firstname" required>
+                                   <span ng-show="form.firstname.$dirty && form.firstname.$error.required" class="help-block">First name is required</span>
                                 </div>
                                 <div class="col-md-6">
                                    <label for="lastname">Last Name</label>
-                                   <input type="text" class="form-control" id="lastname" placeholder="Enter your last name">
+                                   <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Enter your last name" ng-model="cfm.lastname">
                                 </div>
                             </div> 
                         </div>
@@ -22,23 +33,25 @@
                             <div class="row">
                                 <div class="col-md-6">
                                    <label for="email">Email</label>
-                                   <input type="email" class="form-control" id="email" value="shan@gmail.com" disabled>
+                                   <input type="email" class="form-control" id="email" name="email" value="shan@gmail.com" ng-model="cfm.email" disabled>
                                 </div>
                                 <div class="col-md-6">
                                    <label for="companyname">Company Name</label>
-                                   <input type="text" class="form-control" id="company" placeholder="Enter your company name">
+                                   <input type="text" class="form-control" id="company" name="company" placeholder="Enter your company name" ng-model="cfm.company">
                                 </div>
                             </div> 
                         </div>
                         <div class="form-group">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-6" ng-class="{'has-error': form.password.$dirty && form.password.$error.required }">
                                    <label for="password">Password *</label>
-                                   <input type="password" class="form-control" id="password" placeholder="Enter your password">
+                                   <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" ng-model="cfm.password">
+                                   <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6" ng-class="{'has-error': form.confirmPassword.$dirty && form.confirmPassword.$error.repeat-password }">
                                    <label for="confirm-password">Confirm Password *</label>
-                                   <input type="password" class="form-control" id="confirm-password" placeholder="Confirm password">
+                                   <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm password" ng-model="cfm.confirmPassword" repeat-password="password" required>
+                                   <span ng-show="form.confirmPassword.$dirty && form.confirmPassword.$error.repeat-password" class="help-block">Passwords do not match</span>
                                 </div>
                             </div> 
                         </div>
@@ -46,11 +59,11 @@
                             <div class="row">
                                 <div class="col-md-6">
                                    <label for="phoneno">Phone Number</label>
-                                   <input type="text" class="form-control" id="phoneno" placeholder="Enter your phone number">
+                                   <input type="text" class="form-control" id="phoneno" name="phoneno" placeholder="Enter your phone number" ng-model="cfm.phoneno">
                                 </div>
                             </div> 
                         </div>
-                        <button type="submit" class="btn btn-success btn-w-md">Submit</button>
+                        <button type="submit" ng-disabled="form.$invalid || cfm.dataLoading" class="btn btn-success btn-w-md">Submit</button>
                          <div class="callout callout-info">
                                 <p>Submit button will be active only when all fields are valid.</p>
                          </div>
@@ -60,4 +73,8 @@
             </div>
         </div>
     </section>
+                
+            </div>
+        </div>
+    </div>
 </div>

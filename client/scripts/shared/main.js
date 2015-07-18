@@ -85,6 +85,10 @@
 
   .controller('SignupController', SignupController)
 
+  .controller('CodeVerificationController', CodeVerificationController)
+
+  .controller('profileCController', profileCController)
+
   .controller('DashboardCtrl', ['$scope', function($scope) {}]);
 
   LoginController.$inject = ['$scope', '$location', 'AuthenticationService', 'FlashService'];
@@ -147,6 +151,88 @@
           cfm.success = response.success;
           cfm.message = response.message;
         });
+      };
+    }
+
+
+  CodeVerificationController.$inject = ['$scope', '$location', '$http'];
+
+  function CodeVerificationController($scope, $location, $http) {
+
+    var cfm = this;
+    cfm.codeverification = codeverification;
+
+    function codeverification() {
+        alert(cfm.code);
+        alert($location.search().user_id);
+        // vm.dataLoading = true;
+         var headers = {
+           'Content-Type': 'application/x-www-form-urlencoded',
+         };
+
+         var request = $http({
+           method: "post",
+           url: "http://localhost/kohana/user/user_code_verification",
+           data: {
+             user_id: $location.search().user_id,
+             code: cfm.code
+           },
+
+           headers: headers
+         });
+
+         request.success(function (response) {
+          if (response.success) {
+            $location.path('agents/profile');
+          }
+          else {
+            cfm.message = response.message;
+          }
+           
+         });
+      };
+    }
+
+  profileCController.$inject = ['$scope', '$location', '$http'];
+
+  function profileCController($scope, $location, $http) {
+
+    var cfm = this;
+    cfm.email ="shan@gmail.com";
+    cfm.createProfile = createProfile;
+
+    function createProfile() {
+        alert(cfm.firtname);
+        alert($location.search().user_id);
+        // vm.dataLoading = true;
+         var headers = {
+           'Content-Type': 'application/x-www-form-urlencoded',
+         };
+
+         var request = $http({
+           method: "post",
+           url: "http://localhost/kohana/user/create_profile",
+           data: {
+             user_id: $location.search().user_id,
+             firstname: cfm.firstname,
+             lastname: cfm.lastname,
+             company: cfm.company,
+             password: cfm.password,
+             phoneno: cfm.phoneno
+           },
+
+           headers: headers
+         });
+
+         request.success(function (response) {
+          cfm.success = response.success;
+          cfm.message = response.message;
+
+          if (response.success) {
+
+          }
+           
+         });
       };
     }
 
