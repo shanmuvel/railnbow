@@ -1,0 +1,61 @@
+<div class="page-signin">
+
+    <div class="signin-header">
+        <section class="logo text-center">
+            <a href="#/">{{main.brand}}</a>
+        </section>
+    </div>
+
+    <div class="main-body">
+        <div class="container">
+            <div class="form-container" style="max-width:550px;">
+             <section class="panel panel-default">
+               <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Sign In</strong>  </div>
+               <div class="panel-body">
+                <div class="row">
+                 <div class="col-md-8 col-md-offset-2">
+                    <div ng-show="cfm.error" class="alert alert-danger">{{cfm.error}}</div>
+
+                    <form class="form-horizontal" name="form" ng-submit="cfm.login()" role="form">
+                        <fieldset>
+                            <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+                                <div class="btn-icon-lined btn-icon-round btn-icon-sm btn-default-light">
+                                    <span class="glyphicon glyphicon-envelope"></span>
+                                </div>
+                                <input type="email" name="username" id="username"
+                                class="form-control input-lg input-round text-center" 
+                                placeholder="Username" ng-model="cfm.username" required
+                                >
+                                <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>       
+                            </div>
+                            <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
+                                <div class="btn-icon-lined btn-icon-round btn-icon-sm btn-default-light">
+                                    <span class="glyphicon glyphicon-lock"></span>
+                                </div>
+                                <input type="password" name="password" id="password"
+                                class="form-control input-lg input-round text-center"
+                                placeholder="Password" ng-model="cfm.password" required
+                                >
+                                <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>       
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" ng-disabled="form.$invalid || cfm.dataLoading" class="btn btn-primary btn-lg btn-round btn-block text-center">Log in</button>
+                                <!--<a href="#/" class="btn btn-primary btn-lg btn-round btn-block text-center">Log in</a>-->
+                            </div>
+                        </fieldset>
+                    </form>
+
+                    <section>
+                        <p class="text-center"><a href="#/pages/forgot-password">Forgot your password?</a></p>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+</div>
+</div>
+</div>
+
+</div>
