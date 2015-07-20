@@ -45,6 +45,7 @@
       'agents/signup',
       'agents/code-verification',
       'agents/profile',
+      'agents/success-alert',
       'clients/client-list',
       'clients/add-new-client',
       'ui/typography', 
@@ -149,7 +150,7 @@ run.$inject = ['$rootScope', '$location', '$cookieStore', '$http'];
 
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
             // redirect to login page if not logged in and trying to access a restricted page
-            var restrictedPage = $.inArray($location.path(), ['/login', '/agents/code-verification', '/agents/profile']) === -1;
+            var restrictedPage = $.inArray($location.path(), ['/login', '/agents/code-verification', '/agents/profile', '/404', '/agents/success-alert']) === -1;
             var loggedIn = $rootScope.globals.currentUser;
             var loggedPage = $.inArray($location.path(), ['/agents/code-verification', '/agents/profile']) === -1;
             if (restrictedPage && !loggedIn) {

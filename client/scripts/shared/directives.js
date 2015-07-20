@@ -29,6 +29,7 @@
               case '/signup':
               case '/agents/code-verification':
               case '/agents/profile':
+              case '/agents/success-alert':
               case '/forgot-password':
                 return $element.addClass('body-wide');
               case '/lock-screen':

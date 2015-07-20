@@ -193,49 +193,59 @@
       };
     }
 
-  profileCController.$inject = ['$scope', '$location', '$http'];
+    profileCController.$inject = ['$scope', '$location', '$http'];
 
-  function profileCController($scope, $location, $http) {
+    function profileCController($scope, $location, $http) {
 
-    var cfm = this;
-    cfm.email ="shan@gmail.com";
-    cfm.createProfile = createProfile;
+      var cfm = this;
+      var headers = {
+       'Content-Type': 'application/x-www-form-urlencoded',
+     };
 
-    function createProfile() {
-        alert(cfm.firtname);
-        alert($location.search().user_id);
-        // vm.dataLoading = true;
-         var headers = {
-           'Content-Type': 'application/x-www-form-urlencoded',
-         };
+     $http.post('http://localhost/kohana/user', { user_id: $location.search().user_id})
+     .success(function (response) {
+      if(response.user_id != null) {
+        $location.path('/signin');
+      }
+      else {
+        cfm.email = response.email;
+      }
+      
+     });
 
-         var request = $http({
-           method: "post",
-           url: "http://localhost/kohana/user/create_profile",
-           data: {
-             user_id: $location.search().user_id,
-             firstname: cfm.firstname,
-             lastname: cfm.lastname,
-             company: cfm.company,
-             password: cfm.password,
-             phoneno: cfm.phoneno
-           },
+     
+     cfm.createProfile = createProfile;
 
-           headers: headers
-         });
+     function createProfile() {
+        var request = $http({
+         method: "post",
+         url: "http://localhost/kohana/user/create_profile",
+         data: {
+           user_id: $location.search().user_id,
+           firstname: cfm.firstname,
+           lastname: cfm.lastname,
+           company: cfm.company,
+           password: cfm.password,
+           phoneno: cfm.phoneno
+         },
 
-         request.success(function (response) {
-          cfm.success = response.success;
-          cfm.message = response.message;
+         headers: headers
+       });
 
+        request.success(function (response) {
+          
           if (response.success) {
-
+               $location.path('/agents/success-alert');
           }
-           
-         });
+          else {
+            cfm.success = response.success;
+            cfm.message = response.message;
+          }
+
+        });
       };
     }
 
-}).call(this);
+  }).call(this);
 
 //# sourceMappingURL=main.js.map
